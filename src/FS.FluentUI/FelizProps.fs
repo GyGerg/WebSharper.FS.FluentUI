@@ -1,7 +1,12 @@
+#if JAVASCRIPT
+[<WebSharper.JavaScript>]
+#endif
 module FelizProps
 
 // this module contains prop type from https://github.com/Zaid-Ajaj/Feliz/blob/master/Feliz/Properties.fs
 // it has been modified to be restrictive to components
+
+
 
 open Browser.Types
 open Fable.Core.JsInterop
@@ -12,7 +17,7 @@ open Feliz
 open FS.FluentUI
 
 /// Represents the native Html properties.
-[<Erase>]
+// [<Erase>]
 type prop<'Property> =
     /// List of types the server accepts, typically a file type.
     static member inline accept (value: string) = Interop.mkProperty<'Property> "accept" value
@@ -855,7 +860,12 @@ type prop<'Property> =
     /// Indicates the maximum value allowed.
     static member inline max (value: int) = Interop.mkProperty<'Property> "max" value
     /// Indicates the maximum value allowed.
-    static member inline max (value: DateTime) = Interop.mkProperty<'Property> "max" (value.ToString("yyyy-MM-dd"))
+    static member inline max (value: DateTime) = Interop.mkProperty<'Property> "max"
+                                                    #if JAVASCRIPT
+                                                    ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                    #else
+                                                    (value.ToString("yyyy-MM-dd"))
+                                                    #endif
 
     /// Defines the maximum number of characters allowed in the element.
     static member inline maxLength (value: int) = Interop.mkProperty<'Property> "maxLength" value
@@ -884,7 +894,12 @@ type prop<'Property> =
     /// Indicates the minimum value allowed.
     static member inline min (value: int) = Interop.mkProperty<'Property> "min" value
     /// Indicates the minimum value allowed.
-    static member inline min (value: DateTime) = Interop.mkProperty<'Property> "min" (value.ToString("yyyy-MM-dd"))
+    static member inline min (value: DateTime) = Interop.mkProperty<'Property> "min"
+                                                                                #if JAVASCRIPT
+                                                                                ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                                                #else
+                                                                                (value.ToString("yyyy-MM-dd"))
+                                                                                #endif
 
     /// Defines the minimum number of characters allowed in the element.
     static member inline minLength (value: int) = Interop.mkProperty<'Property> "minLength" value
@@ -1808,8 +1823,18 @@ type prop<'Property> =
     /// The value of the element, interpreted as a date
     static member inline value (value: System.DateTime, includeTime: bool) =
         if includeTime
-        then Interop.mkProperty<'Property> "value" (value.ToString("yyyy-MM-ddThh:mm"))
-        else Interop.mkProperty<'Property> "value" (value.ToString("yyyy-MM-dd"))
+        then Interop.mkProperty<'Property> "value"
+                                                    #if JAVASCRIPT
+                                                    ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                    #else
+                                                    (value.ToString("yyyy-MM-ddThh:mm"))
+                                                    #endif
+        else Interop.mkProperty<'Property> "value"
+                                                    #if JAVASCRIPT
+                                                    ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                    #else
+                                                    (value.ToString("yyyy-MM-dd"))
+                                                    #endif
     /// The value of the element, interpreted as a date
     static member inline value (value: System.DateTime) = prop.value(value, includeTime=false)
     /// The value of the element, interpreted as a date, or empty if there is no value.
@@ -1818,8 +1843,18 @@ type prop<'Property> =
         | None -> Interop.mkProperty<'Property> "value" ""
         | Some date ->
             if includeTime
-            then Interop.mkProperty<'Property> "value" (date.ToString("yyyy-MM-ddThh:mm"))
-            else Interop.mkProperty<'Property> "value" (date.ToString("yyyy-MM-dd"))
+            then Interop.mkProperty<'Property> "value"
+                                                    #if JAVASCRIPT
+                                                    ((date |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                    #else
+                                                    (date.ToString("yyyy-MM-dd"))
+                                                    #endif
+            else Interop.mkProperty<'Property> "value"
+                                                    #if JAVASCRIPT
+                                                    ((date |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                    #else
+                                                    (date.ToString("yyyy-MM-dd"))
+                                                    #endif
 
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
@@ -2470,22 +2505,22 @@ module prop =
         static member inline rect (left: int, top: int, right: int, bottom: int) =
             Interop.mkProperty<IReactProperty> "coords"
                 ((unbox<string> left) + "," +
-                 (unbox<string> top) + "," +
-                 (unbox<string> right) + "," +
-                 (unbox<string> bottom))
+                (unbox<string> top) + "," +
+                (unbox<string> right) + "," +
+                (unbox<string> bottom))
         static member inline circle (x: int, y: int, r: int) =
             Interop.mkProperty<IReactProperty> "coords"
                 ((unbox<string> x) + "," +
-                 (unbox<string> y) + "," +
-                 (unbox<string> r))
+                (unbox<string> y) + "," +
+                (unbox<string> r))
         static member inline poly (x1: int, y1: int, x2: int, y2: int, x3: int, y3: int) =
             Interop.mkProperty<IReactProperty> "coords"
                 ((unbox<string> x1) + "," +
-                 (unbox<string> y1) + "," +
-                 (unbox<string> x2) + "," +
-                 (unbox<string> y2) + "," +
-                 (unbox<string> x3) + "," +
-                 (unbox<string> y3))
+                (unbox<string> y1) + "," +
+                (unbox<string> x2) + "," +
+                (unbox<string> y2) + "," +
+                (unbox<string> x3) + "," +
+                (unbox<string> y3))
 
     /// Indicates whether CORS must be used when fetching the resource.
     [<Erase>]

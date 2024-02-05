@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Compile Include="Proxies.fs" />
+        <Compile Include="../../src/FS.FluentUI/Domain.fs" />
+        <Compile Include="../../src/FS.FluentUI/Utils.fs" />
+        <Compile Include="../../src/FS.FluentUI/FelizProps.fs" />
+        <Compile Include="../../src/FS.FluentUI/Props.fs" />
+        <Compile Include="../../src/FS.FluentUI/FluentUI.fs" />
+        <Compile Include="../../src/FS.FluentUI/BundleIcons.fs" />
+        <Content Include="../../src/FS.FluentUI/DateFormatting.js" />
+        <Content Include="../../src/FS.FluentUI/inline-style-expand-shorthand.js" />
+        <None Include="Readme.md" />
+        <None Include="wsconfig.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="FablePartialProxy" Version="1.0.0" />
+        <PackageReference Include="GensAndHooks" Version="1.0.0" />
+        <ProjectReference Include="../../src/FS.FluentUI/FS.FluentUI.fsproj" />
+        <PackageReference Include="WebSharper.Feliz" Version="1.0.0" />
+        <PackageReference Include="FS.FluentUI" Version="1.11.0" />
+        <PackageReference Include="WebSharper" Version="7.0.6.405-beta4" />
+        <PackageReference Include="WebSharper.FSharp" Version="7.0.6.405-beta4" />
+        <PackageReference Include="WebSharper.React" Version="7.0.5.386-beta4" />
+    </ItemGroup>
+
+</Project>

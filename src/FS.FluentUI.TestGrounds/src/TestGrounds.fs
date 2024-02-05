@@ -1,3 +1,4 @@
+[<WebSharper.JavaScript>]
 module TestGrounds
 
 open Elmish
@@ -12,12 +13,11 @@ type Msg =
 type Model = {
     Email: string
 }
-
 let init () =
     {
         Email = ""
     },
-    Cmd.none
+    []
 
 let update msg model =
     match msg with
@@ -26,7 +26,7 @@ let update msg model =
             model with
                 Email = e
         },
-        Cmd.none
+        []
 
 let tokens = Theme.tokens
 
@@ -3283,7 +3283,10 @@ let CalendarTest () =
                     el.title <- $"Custom title from customDayCellRef: {dt.ToString()}"
                     // Disables Saturdays and Sundays
                     if dt.DayOfWeek = DayOfWeek.Sunday || dt.DayOfWeek = DayOfWeek.Saturday then
-                        el.classList.add(classNames.dayOutsideBounds.Split(" "))
+                        // el.classList.add(
+                        //     classNames.dayOutsideBounds.Split(" ")
+                        //     ) // TODO: WebSharper fix
+                        ()
                     else
                         ()
                 | None -> ()
@@ -3426,7 +3429,9 @@ let TeachingPopoverTest() =
 let ratingTest() =
     Fui.rating [
         rating.step.``0.5``
-        rating.defaultValue 4.5M
+        rating.defaultValue 
+            // 4.5M
+            4.5
         rating.onChange (fun (v: ValueProp<decimal>) -> printfn "value %A" v.value)
         rating.iconFilled (Fui.icon.circleFilled [])
         rating.iconOutline (Fui.icon.circleRegular [])

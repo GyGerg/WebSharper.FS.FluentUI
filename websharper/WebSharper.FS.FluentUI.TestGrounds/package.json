@@ -1,0 +1,23 @@
+{
+  "name": "websharper.fs.fluentui.testgrounds",
+  "version": "1.0.0",
+  "description": "The proxy template is intended for creating a JavaScript-only accompanying\r library for an existing .NET library. Add code files to the project, and it\r will produce a `.dll` file that has no .NET content, but contains full\r WebSharper translation and metadata. It can be referenced next to the original\r library in another project, so that both server-side and client-side\r functionality are available.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@fluentui/react-calendar-compat": "^0.0.19",
+    "@fluentui/react-components": "^9.46.3",
+    "@fluentui/react-datepicker-compat": "^0.4.22",
+    "@fluentui/react-migration-v8-v9": "^9.5.7",
+    "@fluentui/react-motion-preview": "^0.5.12",
+    "@fluentui/react-rating-preview": "^0.2.1",
+    "@fluentui/react-search-preview": "^0.1.43",
+    "@fluentui/react-teaching-popover-preview": "^0.1.11",
+    "@fluentui/react-timepicker-compat": "^0.1.8",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "use-sync-external-store": "^1.2.0"
+  }
+}

@@ -481,8 +481,15 @@ type ToastController = {
 // --------------------------------------------------------------------------------- Calendar / Date Types ------------------------------------------------------------------
 
 type DateRangeType = | Day | Week | Month | WorkWeek
+#if JAVASCRIPT
+type [<RequireQualifiedAccess>] DatePickerErrorType = 
+    | [<WebSharper.Constant "invalid-input"; WebSharper.Name "InvalidInput">] ``invalid-input`` 
+    | [<WebSharper.Constant "out-of-bounds"; WebSharper.Name "OutOfBounds">] ``out-of-bounds`` 
+    | [<WebSharper.Constant "required-input"; WebSharper.Name "RequiredInput">] ``required-input``
+#else
 
 type [<RequireQualifiedAccess>] DatePickerErrorType = | ``invalid-input`` | ``out-of-bounds`` | ``required-input``
+#endif
 
 type DatePickerValidationResultData = {
     /// The error found when validating the input.
@@ -1327,8 +1334,17 @@ type HeadlessFlatTree<'T, 'TEvent> = {
 }
 
 // ----------------------------------- TimePicker --------------------------------------------
-
-type [<RequireQualifiedAccess>] TimePickerErrorType = ``invalid-input`` | ``out-of-bounds`` | ``required-input``
+#if JAVASCRIPT
+type [<RequireQualifiedAccess>] TimePickerErrorType = 
+| [<WebSharper.Constant "invalid-input">]``invalid-input`` 
+| [<WebSharper.Constant "out-of-bounds">] ``out-of-bounds`` 
+| [<WebSharper.Constant "required-input">] ``required-input``
+#else
+type [<RequireQualifiedAccess>] TimePickerErrorType = 
+| ``invalid-input`` 
+| ``out-of-bounds`` 
+| ``required-input``
+#endif
 
 type TimeStringValidationResult = {
     date: System.DateTime option

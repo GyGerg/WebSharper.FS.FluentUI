@@ -1,4 +1,5 @@
-﻿module Main
+﻿[<WebSharper.JavaScript>]
+module Main
 
 open Feliz
 open Browser.Dom
@@ -7,7 +8,7 @@ open Feliz.UseElmish
 open FS.FluentUI
 open FS.FluentUI.V8toV9
 
-importSideEffects "./styles/global.scss"
+// importSideEffects "./styles/global.scss"
 
 let brandVariants = {
     ``10``= "#050205"
@@ -76,5 +77,7 @@ let TestGrounds () =
         ]
     ]
 
-let root = ReactDOM.createRoot (document.getElementById "feliz-app")
-root.render (TestGrounds())
+[<WebSharper.SPAEntryPoint>]
+let main () =
+    let root = ReactDOM.createRoot (document.getElementById "feliz-app")
+    root.render (TestGrounds())

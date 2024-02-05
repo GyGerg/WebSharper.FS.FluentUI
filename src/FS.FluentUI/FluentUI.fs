@@ -12,6 +12,9 @@ module internal Shorthand =
     let expand (style): obj = import "expand" "./inline-style-expand-shorthand.js"
 
 module internal DateFormat =
+    #if JAVASCRIPT
+    [<WebSharper.Name "default_dateformat">] // TODO: rename
+    #endif
     let default': DateFormatting = import "DEFAULT_DATE_FORMATTING" "./DateFormatting.js"
 
 [<AutoOpen; System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)>]
@@ -39,6 +42,18 @@ module FuiHelpers =
 //TODO Find a way to dynamically create the "jsCode" string without it creating incorrect JS when compiled.
 [<RequireQualifiedAccess>]
 type [<Erase>] JSTuple =
+    #if JAVASCRIPT
+    static member inline from2Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1]", args)
+    static member inline from3Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2]", args)
+    static member inline from4Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2], $0[3]", args)
+    static member inline from5Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2], $0[3], $0[4]", args)
+    static member inline from6Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2], $0[3], $0[4], $0[5]", args)
+    static member inline from7Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2], $0[3], $0[4], $0[5], $0[6]", args)
+    static member inline from8Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2], $0[3], $0[4], $0[5], $0[6], $0[7]", args)
+    static member inline from9Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2], $0[3], $0[4], $0[5], $0[6], $0[7], $0[8]", args)
+    static member inline from10Args (args: 'T) = WebSharper.JavaScript.JS.Inline("$0[0], $0[1], $0[2], $0[3], $0[4], $0[5], $0[6], $0[7], $0[8], $0[9]", args)
+
+    #else
     static member inline from2Args (args: 'T) = emitJsExpr args "$0[0], $0[1]"
     static member inline from3Args (args: 'T) = emitJsExpr args "$0[0], $0[1], $0[2]"
     static member inline from4Args (args: 'T) = emitJsExpr args "$0[0], $0[1], $0[2], $0[3]"
@@ -48,7 +63,7 @@ type [<Erase>] JSTuple =
     static member inline from8Args (args: 'T) = emitJsExpr args "$0[0], $0[1], $0[2], $0[3], $0[4], $0[5], $0[6], $0[7]"
     static member inline from9Args (args: 'T) = emitJsExpr args "$0[0], $0[1], $0[2], $0[3], $0[4], $0[5], $0[6], $0[7], $0[8]"
     static member inline from10Args (args: 'T) = emitJsExpr args "$0[0], $0[1], $0[2], $0[3], $0[4], $0[5], $0[6], $0[7], $0[8], $0[9]"
-
+    #endif
 type [<Erase>] Fui =
 //---------------------------------------------------------------- Functions --------------------------------------------------------------------------------
 

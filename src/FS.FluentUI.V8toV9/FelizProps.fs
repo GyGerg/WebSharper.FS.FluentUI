@@ -855,7 +855,12 @@ type prop<'Property> =
     /// Indicates the maximum value allowed.
     static member inline max (value: int) = Interop.mkProperty<'Property> "max" value
     /// Indicates the maximum value allowed.
-    static member inline max (value: DateTime) = Interop.mkProperty<'Property> "max" (value.ToString("yyyy-MM-dd"))
+    static member inline max (value: DateTime) = Interop.mkProperty<'Property> "max"
+                                                     #if JAVASCRIPT
+                                                     ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                     #else
+                                                     (value.ToString("yyyy-MM-dd"))
+                                                     #endif
 
     /// Defines the maximum number of characters allowed in the element.
     static member inline maxLength (value: int) = Interop.mkProperty<'Property> "maxLength" value
@@ -884,7 +889,12 @@ type prop<'Property> =
     /// Indicates the minimum value allowed.
     static member inline min (value: int) = Interop.mkProperty<'Property> "min" value
     /// Indicates the minimum value allowed.
-    static member inline min (value: DateTime) = Interop.mkProperty<'Property> "min" (value.ToString("yyyy-MM-dd"))
+    static member inline min (value: DateTime) = Interop.mkProperty<'Property> "min"
+                                                     #if JAVASCRIPT
+                                                     ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                     #else
+                                                     (value.ToString("yyyy-MM-dd"))
+                                                     #endif
 
     /// Defines the minimum number of characters allowed in the element.
     static member inline minLength (value: int) = Interop.mkProperty<'Property> "minLength" value
@@ -1808,8 +1818,18 @@ type prop<'Property> =
     /// The value of the element, interpreted as a date
     static member inline value (value: System.DateTime, includeTime: bool) =
         if includeTime
-        then Interop.mkProperty<'Property> "value" (value.ToString("yyyy-MM-ddThh:mm"))
-        else Interop.mkProperty<'Property> "value" (value.ToString("yyyy-MM-dd"))
+        then Interop.mkProperty<'Property> "value"
+                                                     #if JAVASCRIPT
+                                                     ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                     #else
+                                                     (value.ToString("yyyy-MM-ddThh:mm"))
+                                                     #endif
+        else Interop.mkProperty<'Property> "value"
+                                                     #if JAVASCRIPT
+                                                     ((value |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                     #else
+                                                     (value.ToString("yyyy-MM-dd"))
+                                                     #endif
     /// The value of the element, interpreted as a date
     static member inline value (value: System.DateTime) = prop.value(value, includeTime=false)
     /// The value of the element, interpreted as a date, or empty if there is no value.
@@ -1818,8 +1838,18 @@ type prop<'Property> =
         | None -> Interop.mkProperty<'Property> "value" ""
         | Some date ->
             if includeTime
-            then Interop.mkProperty<'Property> "value" (date.ToString("yyyy-MM-ddThh:mm"))
-            else Interop.mkProperty<'Property> "value" (date.ToString("yyyy-MM-dd"))
+            then Interop.mkProperty<'Property> "value"
+                                                     #if JAVASCRIPT
+                                                     ((date |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                     #else
+                                                     (date.ToString("yyyy-MM-ddThh:mm"))
+                                                     #endif
+            else Interop.mkProperty<'Property> "value"
+                                                     #if JAVASCRIPT
+                                                     ((date |> WebSharper.JavaScript.Pervasives.As<WebSharper.JavaScript.Date>).ToISOString())
+                                                     #else
+                                                     (date.ToString("yyyy-MM-dd"))
+                                                     #endif
 
     /// `prop.ref` callback that sets the value of an input after DOM element is created.
     /// Can be used instead of `prop.defaultValue` and `prop.value` props to override input value.
